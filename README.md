@@ -36,3 +36,10 @@ open [http://localhost:6543](http://localhost:6543) in your browser at Ubuntu 22
 
 - [Integrating a UPS in our server](https://www.danielmartingonzalez.com/en/integrating-ups-server/) - Daniel Martín González
 - [Network UPS Tools](https://networkupstools.org/) - Network UPS Tools - NUT - Homepage
+
+## TODO
+
+- test with other pc visit webnut.
+- support multiple UPS devices with different drivers.
+- support automatic detection of UPS devices. (currently only supports USB UPS devices)
+- support automatic plug in and plug out of UPS devices. restart the container when the UPS device is plugged in again.
