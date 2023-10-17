@@ -12,6 +12,15 @@ Guide to install NUT UPS Driver for ZSPACE. This guide is based on Ubuntu 22.04 
 
 ### Ubuntu 22.04 LTS (x86_64)
 
+cd root directory of zspace_nut
+
+```bash
+sudo bash ups_daemon.sh > /dev/null 2>&1 &
+```
+
+### More details
+
+
 ```bash
 sudo lsusb
 ```
