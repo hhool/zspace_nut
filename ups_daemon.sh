@@ -24,13 +24,14 @@ declare -a g_array_manufacturer_and_product=(
 g_bus_number=""
 g_device_number=""
 
-# stop current nut-upsd docker container forcefully
-stopCurrentNutUpsdDockerContainer() {
-    local containerId=$(docker ps -a | grep nut-upsd | awk '{print $1}')
+# stop docker container with name forcefully
+stopDockerContainerWithName() {
+    local containerName=$1
+    local containerId=$(docker ps -a | grep "$containerName" | awk '{print $1}')
     if [ -z "$containerId" ]; then
-        echo "No container found for nut-upsd" >> /dev/null
+        echo "No container found for $containerName" >> /dev/null
     else
-        echo "Container found for nut-upsd"
+        echo "Container found for $containerName"
         echo "Container id = $containerId"
         # stop the container
         docker stop "$containerId"
@@ -91,39 +92,6 @@ startDeviceWithManufacuresAndProducts() {
     done
 }
 
-# check system is linux
-checkSystemIsLinux() {
-    local system=$(uname -s)
-    if [ "$system" != "Linux" ]; then
-        echo "System is not Linux"
-        exit 1
-    fi
-}
-
-# check system is root
-checkSystemIsRoot() {
-    local user=$(whoami)
-    if [ "$user" != "root" ]; then
-        echo "User is not root"
-        exit 1
-    fi
-}
-
-# stop current webnut docker container forcefully
-stopCurrentWebnutDockerContainer() {
-    local containerId=$(docker ps -a | grep webnut | awk '{print $1}')
-    if [ -z "$containerId" ]; then
-        echo "No container found for webnut" >> /dev/null
-    else
-        echo "Container found for webnut"
-        echo "Container id = $containerId"
-        # stop the container
-        docker stop "$containerId"
-        # remove the container
-        docker rm "$containerId" -f
-    fi
-}
-
 # start webnut docker container
 startWebnutDockerContainer() {
     # start the container
@@ -154,6 +122,25 @@ checkDockerContainerIsRunning() {
 }
 
 # check system is linux
+checkSystemIsLinux() {
+    local system=$(uname -s)
+    if [ "$system" != "Linux" ]; then
+        echo "System is not Linux"
+        exit 1
+    fi
+}
+
+# check system is root
+checkSystemIsRoot() {
+    local user=$(whoami)
+    if [ "$user" != "root" ]; then
+        echo "User is not root"
+        exit 1
+    fi
+}
+
+
+# check system is linux
 checkSystemIsLinux
 # check system is root
 checkSystemIsRoot
@@ -170,7 +157,7 @@ do
     else
         echo "nut-upsd docker container is not running"
         # stop current nut-upsd docker container forcefully
-        stopCurrentNutUpsdDockerContainer
+        stopDockerContainerWithName "nut-upsd"
         # start the device with manufacturer and product
         startDeviceWithManufacuresAndProducts
     fi
@@ -183,7 +170,7 @@ do
     else
         echo "webnut docker container is not running"
         # stop current webnut docker container forcefully
-        stopCurrentWebnutDockerContainer
+        stopDockerContainerWithName "webnut"
         # start webnut docker container
         startWebnutDockerContainer
     fi
@@ -205,7 +192,7 @@ do
             echo "deviceNumber = $deviceNumber"
             echo "g_bus_number and g_device_number is not same as busNumber and deviceNumber"
             # stop current nut-upsd docker container forcefully
-            stopCurrentNutUpsdDockerContainer
+            stopDockerContainerWithName "nut-upsd"
             # start the device with manufacturer and product
             startDeviceWithManufacuresAndProducts
         fi
@@ -216,7 +203,7 @@ do
         echo "deviceNumber = $deviceNumber"
         echo "g_bus_number and g_device_number is empty"
         # stop current nut-upsd docker container forcefully
-        stopCurrentNutUpsdDockerContainer
+        stopDockerContainerWithName "nut-upsd"
         # start the device with manufacturer and product
         startDeviceWithManufacuresAndProducts
     fi
