@@ -32,7 +32,7 @@ sudo lsusb
 ```
 
 ```bash
-docker run -d --name=nut-upsd --hostname=nut-upsd --restart=always --network=host --device /dev/bus/usb/001/003 -e UPS_NAME="zspace_ups" -e UPS_DESC="Server - zspace ups U2600" -e UPS_DRIVER="usbhid-ups" -e UPS_PORT="auto" -e API_USER="upsmon" -e API_PASSWORD="123456789ABCDEFGH" -e ADMIN_PASSWORD="123456789ABCDEFGH" -e SHUTDOWN_CMD="echo 'Home has no current. Proceeding to shut down...'" upshift/nut-upsd
+docker run -d --name=nut-upsd --hostname=nut-upsd --restart=always --network=host --device /dev/bus/usb/001/003 -e UPS_NAME="zspace_ups" -e UPS_DESC="Server - zspace ups U2600" -e UPS_DRIVER="usbhid-ups" -e UPS_PORT="auto" -e API_USER="upsmon" -e API_PASSWORD="123456789ABCDEFGH" -e ADMIN_PASSWORD="123456789ABCDEFGH" -e SHUTDOWN_CMD="echo 'Home has no current. Proceeding to shut down...'" hhool/zspace_nut_ups:v1.0
 ```
 
 ```bash
